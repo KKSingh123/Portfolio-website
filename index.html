@@ -877,15 +877,29 @@
     }
   });
 
-  document.getElementById('contactForm').addEventListener('submit', (e) => {
+  document.getElementById('contactForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    const name    = document.getElementById('senderName').value.trim();
-    const email   = document.getElementById('senderEmail').value.trim();
+
+    const name = document.getElementById('senderName').value.trim();
+    const email = document.getElementById('senderEmail').value.trim();
     const message = document.getElementById('message').value.trim();
-    const subject = encodeURIComponent(`Message from ${name}`);
-    const body    = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:phd2201101015@iiti.ac.in?subject=${subject}&body=${body}`;
-  });
+
+    const subject = encodeURIComponent("Message from " + name);
+
+    const body = encodeURIComponent(
+`Name: ${name}
+
+Email: ${email}
+
+Message:
+${message}`
+    );
+
+    const gmailURL =
+`https://mail.google.com/mail/?view=cm&fs=1&to=phd2201101015@iiti.ac.in&su=${subject}&body=${body}`;
+
+    window.open(gmailURL, "_blank");
+});
 </script>
 </body>
 </html>
