@@ -340,6 +340,8 @@
   }
   .s3 .ach-badge { background: rgba(124,140,255,0.14); border: 1px solid rgba(124,140,255,0.32); color: #c4caff; }
   .s4 .ach-badge { background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.3); color: #fcd68a; }
+  html[data-theme="light"] .s3 .ach-badge { background: rgba(124,140,255,0.14); border-color: rgba(124,140,255,0.45); color: #3644c9; }
+  html[data-theme="light"] .s4 .ach-badge { background: rgba(245,158,11,0.16); border-color: rgba(245,158,11,0.45); color: #9a5b06; }
 
   .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
   .s3 .badge-dot { background: var(--accent); }
@@ -358,6 +360,7 @@
     font-size: 0.82rem;
     color: var(--ink-2);
   }
+  html[data-theme="light"] .ach-meta-item { background: rgba(0,0,0,0.035); }
 
   .role-box {
     display: flex;
@@ -417,6 +420,8 @@
     color: var(--ink-2);
   }
   .ach-link.secondary:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
+  html[data-theme="light"] .ach-link.secondary { background: rgba(0,0,0,0.03); }
+  html[data-theme="light"] .ach-link.secondary:hover { border-color: rgba(0,0,0,0.22); }
 
   /* ── CONTACT ── */
   .contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 32px; }
