@@ -245,7 +245,7 @@
   /* ══════════════════════════════════════════
      ACHIEVEMENTS — hidden by default
   ══════════════════════════════════════════ */
-  #achievements {
+  #achievements, #service {
     display: none;
     position: fixed;
     inset: 0;
@@ -254,10 +254,11 @@
     padding: 110px 0 40px;
     background: linear-gradient(180deg, rgba(10,10,11,0.97), rgba(7,10,20,0.98));
   }
-  html[data-theme="light"] #achievements {
+  html[data-theme="light"] #achievements,
+  html[data-theme="light"] #service {
     background: linear-gradient(180deg, rgba(250,250,249,0.97), rgba(240,240,245,0.98));
   }
-  #achievements.visible {
+  #achievements.visible, #service.visible {
     display: block;
     animation: fadeSlideIn 0.4s ease;
   }
@@ -482,6 +483,7 @@
         <a href="#skills">Skills</a>
         <a href="#experience">Experience</a>
         <a href="#publications">Publications</a>
+        <a href="#service" id="serviceNavBtn">Service</a>
         <a href="#resume">Resume</a>
         <a href="#achievements" id="achNavBtn">Achievements</a>
         <a href="#contact">Contact</a>
@@ -719,6 +721,85 @@
               <a class="pub-link" href="https://ieeexplore.ieee.org/abstract/document/10898971" target="_blank" rel="noreferrer">IEEE Xplore ↗</a>
               <span class="pub-year">2024</span>
             </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROFESSIONAL SERVICE — hidden by default, toggled by navbar "Service" button ── -->
+  <section id="service">
+    <div class="container">
+      <div class="ach-close-row">
+        <h2 class="sec-title">📝 Professional Service</h2>
+        <button id="closeService" class="btn btn-secondary" type="button">✕ Close</button>
+      </div>
+      <p class="sec-lede">Peer review contributions supporting the broader research community.</p>
+
+      <div class="ach-list">
+
+        <!-- IEEE ICC 2025 -->
+        <div class="ach-card s3">
+          <div class="ach-body">
+            <div class="ach-top">
+              <div class="ach-title-wrap">
+                <p class="ach-edition">Peer Review</p>
+                <h2 class="ach-name">IEEE ICC</h2>
+              </div>
+              <span class="ach-badge"><span class="badge-dot"></span>Reviewer</span>
+            </div>
+
+            <div class="ach-meta">
+              <div class="ach-meta-item"><span>📅</span><span>2025</span></div>
+              <div class="ach-meta-item"><span>🏛️</span><span>IEEE International Conference on Communications</span></div>
+              <div class="ach-meta-item"><span>🎯</span><span>Technical Program Review</span></div>
+            </div>
+
+            <div class="role-box">
+              <div class="role-icon">📝</div>
+              <div class="role-text">
+                <span class="role-label">My Role</span>
+                <span class="role-value">Reviewer</span>
+              </div>
+            </div>
+
+            <p class="ach-desc">
+              Reviewed submitted manuscripts for <strong>IEEE ICC</strong>, evaluating technical merit, novelty, and
+              relevance to the conference's networking and communications tracks.
+            </p>
+          </div>
+        </div>
+
+        <!-- ICDSNE 2026 -->
+        <div class="ach-card s4">
+          <div class="ach-body">
+            <div class="ach-top">
+              <div class="ach-title-wrap">
+                <p class="ach-edition">Peer Review</p>
+                <h2 class="ach-name">ICDSNE</h2>
+              </div>
+              <span class="ach-badge"><span class="badge-dot"></span>Reviewer</span>
+            </div>
+
+            <div class="ach-meta">
+              <div class="ach-meta-item"><span>📅</span><span>2026</span></div>
+              <div class="ach-meta-item"><span>🏛️</span><span>ICDSNE Conference</span></div>
+              <div class="ach-meta-item"><span>🎯</span><span>Technical Program Review</span></div>
+            </div>
+
+            <div class="role-box">
+              <div class="role-icon">📝</div>
+              <div class="role-text">
+                <span class="role-label">My Role</span>
+                <span class="role-value">Reviewer</span>
+              </div>
+            </div>
+
+            <p class="ach-desc">
+              Reviewed submitted manuscripts for <strong>ICDSNE</strong>, evaluating technical merit, novelty, and
+              relevance to the conference's technical tracks.
+            </p>
           </div>
         </div>
 
@@ -1025,10 +1106,28 @@
     document.body.style.overflow = '';
   });
 
+  const serviceNavBtn = document.getElementById('serviceNavBtn');
+  const serviceSection = document.getElementById('service');
+
+  serviceNavBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    const isNowVisible = serviceSection.classList.toggle('visible');
+    serviceNavBtn.classList.toggle('active-ach', isNowVisible);
+    document.body.style.overflow = isNowVisible ? 'hidden' : '';
+  });
+
+  document.getElementById('closeService').addEventListener('click', () => {
+    serviceSection.classList.remove('visible');
+    serviceNavBtn.classList.remove('active-ach');
+    document.body.style.overflow = '';
+  });
+
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       achSection.classList.remove('visible');
       achNavBtn.classList.remove('active-ach');
+      serviceSection.classList.remove('visible');
+      serviceNavBtn.classList.remove('active-ach');
       document.body.style.overflow = '';
     }
   });
