@@ -1135,43 +1135,77 @@ Data Science and Network Engineering </span></div>
 
   const achNavBtn  = document.getElementById('achNavBtn');
   const achSection = document.getElementById('achievements');
-
-  achNavBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const isNowVisible = achSection.classList.toggle('visible');
-    achNavBtn.classList.toggle('active-ach', isNowVisible);
-    document.body.style.overflow = isNowVisible ? 'hidden' : '';
-  });
-
-  document.getElementById('closeAchievements').addEventListener('click', () => {
-    achSection.classList.remove('visible');
-    achNavBtn.classList.remove('active-ach');
-    document.body.style.overflow = '';
-  });
-
   const serviceNavBtn = document.getElementById('serviceNavBtn');
   const serviceSection = document.getElementById('service');
 
-  serviceNavBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const isNowVisible = serviceSection.classList.toggle('visible');
-    serviceNavBtn.classList.toggle('active-ach', isNowVisible);
-    document.body.style.overflow = isNowVisible ? 'hidden' : '';
-  });
-
-  document.getElementById('closeService').addEventListener('click', () => {
+  /* ── OVERLAY NAVIGATION (history-aware so browser Back never exits the site) ── */
+  function closeOverlays() {
+    achSection.classList.remove('visible');
+    achNavBtn.classList.remove('active-ach');
     serviceSection.classList.remove('visible');
     serviceNavBtn.classList.remove('active-ach');
     document.body.style.overflow = '';
+  }
+  function openAchievements() {
+    closeOverlays();
+    achSection.classList.add('visible');
+    achNavBtn.classList.add('active-ach');
+    document.body.style.overflow = 'hidden';
+  }
+  function openService() {
+    closeOverlays();
+    serviceSection.classList.add('visible');
+    serviceNavBtn.classList.add('active-ach');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Normalize the base entry so Back always has a "home" state to land on
+  history.replaceState({ view: 'home' }, '', location.pathname + location.search + '#home');
+
+  achNavBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (achSection.classList.contains('visible')) {
+      history.back();
+    } else {
+      history.pushState({ view: 'achievements' }, '', '#achievements');
+      openAchievements();
+    }
+  });
+
+  document.getElementById('closeAchievements').addEventListener('click', () => {
+    history.back();
+  });
+
+  serviceNavBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (serviceSection.classList.contains('visible')) {
+      history.back();
+    } else {
+      history.pushState({ view: 'service' }, '', '#service');
+      openService();
+    }
+  });
+
+  document.getElementById('closeService').addEventListener('click', () => {
+    history.back();
+  });
+
+  window.addEventListener('popstate', (e) => {
+    const view = (e.state && e.state.view) || 'home';
+    if (view === 'achievements') {
+      openAchievements();
+    } else if (view === 'service') {
+      openService();
+    } else {
+      closeOverlays();
+    }
   });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      achSection.classList.remove('visible');
-      achNavBtn.classList.remove('active-ach');
-      serviceSection.classList.remove('visible');
-      serviceNavBtn.classList.remove('active-ach');
-      document.body.style.overflow = '';
+      if (achSection.classList.contains('visible') || serviceSection.classList.contains('visible')) {
+        history.back();
+      }
     }
   });
 
